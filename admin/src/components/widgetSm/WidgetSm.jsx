@@ -9,13 +9,16 @@ const WidgetSm = () => {
 
     const [newUser, setNewUser] = useState([]) 
 
+    const access = JSON.parse(localStorage.getItem('user'))
+    const accessInfo = access.accessToken
+
     useEffect(() => {
         const getUsers = async () => {
             try{
                 const res = await axios.get("/users?new=true", 
                 {
                     headers: {
-                      token: process.env.REACT_APP_HEADERS_TOKEN 
+                      token: "Bearer " + accessInfo
                     }  
                 })
                 setNewUser(res.data) 

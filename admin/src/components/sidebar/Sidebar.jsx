@@ -1,5 +1,4 @@
-import { 
-    AttachMoney, 
+import {
     BarChart, 
     ChatBubbleOutline, 
     DynamicFeed, 
@@ -10,7 +9,8 @@ import {
     Timeline, 
     TrendingUp, 
     WorkOutline,
-    PlayCircleOutline
+    PlayCircleOutline,
+    FormatListBulletedOutlined
 } from "@material-ui/icons";
 import {Link} from 'react-router-dom';
 
@@ -54,10 +54,12 @@ const Sidebar = () => {
                                 Movies
                             </li>
                         </Link>
-                        <li className="sidebarListItem">
-                            <AttachMoney className="sidebarIcon" />
-                            Transactions
-                        </li>
+                        <Link to='/lists' className="link" >
+                            <li className="sidebarListItem">
+                                <FormatListBulletedOutlined className="sidebarIcon" />
+                                Lists
+                            </li>
+                        </Link>
                         <li className="sidebarListItem">
                             <BarChart className="sidebarIcon" />
                             Reports

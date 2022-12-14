@@ -6,11 +6,13 @@
     overflow: hidden;
     cursor: pointer;
     color: white;
+    margin-bottom: 15px;
 
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: 20ms ease-in;
     }
     video {
         position: absolute;
@@ -19,6 +21,7 @@
         object-fit: cover;
         top: 0;
         left: 0; 
+        transition: 20ms ease-in;
     }
     &:hover {
         width: 325px;
@@ -33,6 +36,7 @@
             height: 140px;
         }
         .itemInfo {
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
             padding: 5px;

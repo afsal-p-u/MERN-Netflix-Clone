@@ -34,7 +34,7 @@
         color: #fff;
         display: flex;
         flex-direction: column;
-
+        
         img {
             width: 400px;
         }
@@ -54,7 +54,7 @@
                 font-size: 18px;
                 font-weight: 500; 
                 margin-right: 10px;
-                cursor: pointer;
+                cursor: pointer;  
 
                 &.play {
                     background-color: #fff;

@@ -2,20 +2,22 @@ import { InfoOutlined, PlayArrow } from '@material-ui/icons';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import './featured.scss';
 
-const Featured = ({type}) => {
+const Featured = ({type, setGenre}) => {
 
     const [content, setContent] = useState({});
+    const [genre1, setGenre1] = useState('') 
 
     useEffect(() => {
         const getRandomContent = async () => {
             try{
-                const res = await axios.get(`/movies/random/?type=${type}`,
+                const res = await axios.get(`/movies/random?type=${type}&genre=${genre1}`,
                 {
                     headers: {
-                      token: process.env.REACT_APP_HEADERS_TOKEN
+                      token: "Bearer " + JSON.parse(localStorage.getItem('user')).accessToken
                     }
                 });
                 setContent(res.data[0])
@@ -23,15 +25,27 @@ const Featured = ({type}) => {
                 console.log(err)
             }
         }
-    getRandomContent()
-    }, [type])
+
+        getRandomContent()
+
+    }, [type, genre1])
+
+    console.log(content, 'content')
 
   return (
       <div className='featured'>
         {type && (
             <div className="category">
-                <span>{type === 'movies' ? 'Movies' : 'Series'}</span>
-                <select name="genre" id="genre">
+                <span>{type === 'movie' ? 'Movies' : 'Series'}</span>
+                <select 
+                    name="genre" 
+                    id="genre" 
+                    onChange={e => 
+                        {
+                            setGenre(e.target.value)
+                            setGenre1(e.target.value)
+                        }}
+                >
                     <option>Genre</option>
                     <option value="adventure">Adventure</option>
                     <option value="comody">Comody</option>
@@ -47,7 +61,7 @@ const Featured = ({type}) => {
                     <option value="drama">Drama</option>
                     <option value="documentary">Documentary</option>
                 </select>
-            </div>
+            </div> 
         )}
         <img src={content.img}
             alt="" 
@@ -60,7 +74,13 @@ const Featured = ({type}) => {
             <div className="buttons">
                 <button className="play">
                     <PlayArrow />
-                    <span>Play</span>
+                    <Link 
+                        to="/watch" 
+                        state={{movie: content}}
+                        style={{textDecoration: "none", color:"#000"}}
+                    >
+                        <span>Play</span>
+                    </Link>
                 </button>
                 <button className="more">
                     <InfoOutlined />

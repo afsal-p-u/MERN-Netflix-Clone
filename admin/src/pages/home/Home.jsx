@@ -7,6 +7,7 @@ import WidgetLg from "../../components/widgetLg/WidgetLg";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 
 import './home.css';
+import { useNavigate } from 'react-router-dom';
  
 const Home = () => {
     const MONTHS = useMemo(() => 
@@ -28,14 +29,29 @@ const Home = () => {
 
   const [userStats, setUserStats] = useState([]);
 
+  const access = JSON.parse(localStorage.getItem('user')) 
+  const accessInfo = access.accessToken
+
+  const navigate = useNavigate()
+
+  setInterval(()=>{
+    if(localStorage.getItem('user') == null){
+      navigate("/login")
+    }
+  }, 5000)
+
+  window.unload = () => {
+    localStorage.removeItem('user')
+  }
+
   useEffect(() => {
     const getStats = async () => {
-      try{
+      try{ 
         const res = await axios.get("/users/stats", 
         {
           headers: 
           {
-            token: process.env.REACT_APP_HEADERS_TOKEN
+            token: "Bearer " + accessInfo
           }
         })
         const statsList = res.data.sort(function (a, b) {

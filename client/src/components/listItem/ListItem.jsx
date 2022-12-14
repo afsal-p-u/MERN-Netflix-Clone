@@ -11,13 +11,14 @@ const ListItem = ({index, item}) => {
     const [isHovered, setIsHovered] = useState(false);
     const [movie, setMovie] = useState({});
 
+
     useEffect(() => {
         const getMovie = async () => {
             try{
                 const res = await axios.get('/movies/find/'+item, 
                 {
                     headers: {
-                      token: process.env.REACT_APP_HEADERS_TOKEN
+                      token: "Bearer " + JSON.parse(localStorage.getItem('user')).accessToken
                     }
                 });
                 setMovie(res.data);
@@ -28,6 +29,8 @@ const ListItem = ({index, item}) => {
         getMovie()
     },[item]);
 
+    
+
   return (
     <Link to="/watch" state={{movie: movie}}>
         <div 
@@ -37,13 +40,13 @@ const ListItem = ({index, item}) => {
             onMouseLeave={() => setIsHovered(false)}
         >
             <img 
-                src={movie.img} 
+                src={movie.imgSm} 
                 alt="" 
             />
 
             {isHovered && (
                 <>
-                    <video src={movie.trailer} autoPlay={true} loop></video>
+                    <video src={movie.trailor} autoPlay={true} loop></video>
                     <div className="itemInfo">
                         <div className="icons">
                             <PlayArrow className='icon'/>
